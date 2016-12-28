@@ -11,6 +11,8 @@ namespace Gierka
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        private Plansza mapa;
+        private Gracz gracz;
 
         public Game1()
         {
@@ -27,7 +29,11 @@ namespace Gierka
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            graphics.PreferredBackBufferWidth = 480;
+            graphics.PreferredBackBufferHeight = 480;
+            graphics.ApplyChanges();
+            mapa = new Plansza(Content);
+            gracz = new Gracz(Content);
             base.Initialize();
         }
 
@@ -39,7 +45,8 @@ namespace Gierka
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            mapa.Initialize();
+            gracz.Initialize();
             // TODO: use this.Content to load your game content here
         }
 
@@ -63,7 +70,8 @@ namespace Gierka
                 Exit();
 
             // TODO: Add your update logic here
-
+            if(gameTime.TotalGameTime.Milliseconds %10==0)
+            //gracz.Move();
             base.Update(gameTime);
         }
 
@@ -73,10 +81,13 @@ namespace Gierka
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
-
+            spriteBatch.Begin();
+            mapa.Draw(spriteBatch);
+            //gracz.Draw(spriteBatch);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
