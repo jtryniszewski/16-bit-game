@@ -13,6 +13,7 @@ namespace Gierka
         SpriteBatch spriteBatch;
         private Plansza mapa;
         private Gracz gracz;
+        private bool click = false;
 
         public Game1()
         {
@@ -70,7 +71,16 @@ namespace Gierka
                 Exit();
 
             // TODO: Add your update logic here
+            if(Keyboard.GetState().IsKeyDown(Keys.Up) && click == false)
+            {
+                gracz.Click();
+                click = true;
+            }
             if(gameTime.TotalGameTime.Milliseconds %10==0)
+            {
+                gracz.Jump();
+                click = false;
+            }
             //gracz.Move();
             base.Update(gameTime);
         }
@@ -86,7 +96,7 @@ namespace Gierka
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             mapa.Draw(spriteBatch);
-            //gracz.Draw(spriteBatch);
+            gracz.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
