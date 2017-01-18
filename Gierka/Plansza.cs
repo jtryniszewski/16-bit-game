@@ -117,5 +117,29 @@ namespace Gierka
                 }
             }
         }
+
+        //-----------------------------------------------------------
+
+        public int[,] Mapa()
+        {
+            //lista ktora podaje przyjmuje wartosci 1 i 0
+            //1 gdy wystepuje czesc mapy a 0 gdy mapa jest pusta
+            int[,] mapa = new int[poziom.Length, poziom[0].Length];
+            for (int i = 0; i < poziom.Length; i++)
+            {
+                for (int j = 0; j < poziom[i].Length; j++)
+                {
+                    if(poziom[i][j]=='0')
+                    {
+                        mapa[i,j] = 0;
+                    }
+                    else
+                    {
+                        mapa[i, j] = 1;
+                    }
+                }
+            }
+            return mapa;
+        }
     }
 }

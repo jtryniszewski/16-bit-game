@@ -98,8 +98,8 @@ namespace Gierka
             {
                 if (jumpHeight < maxJumpHeight)
                 {
-                    jumpHeight++;
-                    polozenie.Y--;
+                    jumpHeight+=2;
+                    polozenie.Y-=2;
                 }
                 else
                 {
@@ -111,8 +111,8 @@ namespace Gierka
             {
                 if(jumpHeight>=0)
                 {
-                    jumpHeight--;
-                    polozenie.Y++;
+                    jumpHeight-=2;
+                    polozenie.Y+=2;
                 }
                 else
                 {
