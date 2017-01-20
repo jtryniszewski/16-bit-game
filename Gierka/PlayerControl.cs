@@ -53,11 +53,22 @@ namespace Gierka
                 position.X += 2;
             }
         }
+        private void MoveLeft()
+        {
+            if (siatkaRuchu[(int)(position.Y) / 16, (int)(position.X - 16) / 2] == 0)
+            {
+                position.X -= 2;
+            }
+        }
         public Vector2 Move()
         {
-            if(Keyboard.GetState().IsKeyDown(Keys.Right))
+            if (Keyboard.GetState().IsKeyDown(Keys.Right) && (position.X+16)/2<240)
             {
                 MoveRight();
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Left) && (position.X-8)/2>=0)
+            {
+                MoveLeft();
             }
             return position;
         }

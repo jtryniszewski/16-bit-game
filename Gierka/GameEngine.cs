@@ -64,7 +64,7 @@ namespace Gierka
         public void Move()
         {
             gracz.Position = kontroler.Move();
-
+            gracz.Move();
         }
     }
 }

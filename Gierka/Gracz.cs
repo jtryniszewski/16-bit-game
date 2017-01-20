@@ -15,12 +15,9 @@ namespace Gierka
         private ContentManager content;
         private List<Texture2D> walk;
         private List<Texture2D> jump;
-        private bool isJump;//czy skok
-        private bool isFall;//czy spada gracz
-        private int jumpHeight;//aktualna wysokosc skoku
-        private int maxJumpHeight;//maksymalna wysokosc skoku
         private Vector2 polozenie;
         private int fazaKroku;
+        private bool ISRight;
         private Vector2 starePolozenie;
 
         //------------------------------------------------------
@@ -44,12 +41,8 @@ namespace Gierka
             walk.Add(content.Load<Texture2D>("MrDefaulto_Walk_05"));
             jump.Add(content.Load<Texture2D>("MrDefaulto_Fall"));
             jump.Add(content.Load<Texture2D>("MrDefaulto_Jump"));
-            isJump = false;
-            //polozenie = new Vector2(0, 210);
-            maxJumpHeight = 32;
-            jumpHeight = 0;
-            isFall = false;
             fazaKroku = 0;
+            ISRight = true;
         }
 
         //------------------------------------------------------
@@ -71,20 +64,14 @@ namespace Gierka
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if(isJump == false)
+           
+            if(ISRight)
             {
-                if (isFall == false)
-                {
-                    spriteBatch.Draw(walk[fazaKroku], polozenie, Color.White);
-                }
-                else
-                {
-                    spriteBatch.Draw(jump[0], polozenie, Color.White);
-                }
+                spriteBatch.Draw(walk[fazaKroku], polozenie, null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
             }
             else
             {
-                spriteBatch.Draw(jump[1], polozenie, Color.White);
+                spriteBatch.Draw(walk[fazaKroku], polozenie, null, Color.White, 0f, new Vector2(0, 0), 1f, SpriteEffects.FlipHorizontally, 0f);
             }
         }
 
@@ -92,10 +79,22 @@ namespace Gierka
 
         public void Move()
         {
-            if(polozenie.X<464)
+            if(starePolozenie.X<polozenie.X)
             {
-                polozenie.X++;
+                ISRight = true;
                 if(fazaKroku<5)
+                {
+                    fazaKroku++;
+                }
+                else
+                {
+                    fazaKroku = 0 ;
+                }
+            }
+            if(starePolozenie.X>polozenie.X)
+            {
+                ISRight = false;
+                if (fazaKroku < 5)
                 {
                     fazaKroku++;
                 }
@@ -104,44 +103,6 @@ namespace Gierka
                     fazaKroku = 0;
                 }
             }
-        }
-
-        //------------------------------------------------------------------
-
-        public void Jump()
-        {
-            if(isJump == true)
-            {
-                if (jumpHeight < maxJumpHeight)
-                {
-                    jumpHeight+=2;
-                    polozenie.Y-=2;
-                }
-                else
-                {
-                    isJump = false;
-                    isFall = true;
-                }
-            }
-            if(isFall== true)
-            {
-                if(jumpHeight>=0)
-                {
-                    jumpHeight-=2;
-                    polozenie.Y+=2;
-                }
-                else
-                {
-                    isFall = false;
-                }
-            }
-        }
-
-        //--------------------------------------------------------------------
-
-        public void Click()
-        {
-            isJump = true;
         }
     }
 }
