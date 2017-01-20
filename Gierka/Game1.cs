@@ -11,14 +11,13 @@ namespace Gierka
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        private Plansza mapa;
-        private Gracz gracz;
-        private bool click = false;
+        GameEngine silnikGry;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            silnikGry = new GameEngine(Content);
         }
 
         /// <summary>
@@ -33,8 +32,7 @@ namespace Gierka
             graphics.PreferredBackBufferWidth = 480;
             graphics.PreferredBackBufferHeight = 480;
             graphics.ApplyChanges();
-            mapa = new Plansza(Content);
-            gracz = new Gracz(Content);
+            silnikGry.Initialize();
             base.Initialize();
         }
 
@@ -46,8 +44,7 @@ namespace Gierka
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            mapa.Initialize();
-            gracz.Initialize();
+            silnikGry.LadowanieMapy();
             // TODO: use this.Content to load your game content here
         }
 
@@ -69,18 +66,8 @@ namespace Gierka
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            silnikGry.Move();
             // TODO: Add your update logic here
-            if(Keyboard.GetState().IsKeyDown(Keys.Up) && click == false)
-            {
-                gracz.Click();
-                click = true;
-            }
-            if(gameTime.TotalGameTime.Milliseconds %10==0)
-            {
-                gracz.Jump();
-                click = false;
-            }
             //gracz.Move();
             base.Update(gameTime);
         }
@@ -95,8 +82,7 @@ namespace Gierka
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            mapa.Draw(spriteBatch);
-            gracz.Draw(spriteBatch);
+            silnikGry.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }

@@ -141,5 +141,22 @@ namespace Gierka
             }
             return mapa;
         }
+
+        //-----------------------------------------------------------
+
+        public int Wysokosc
+        {
+            get
+            {
+                return poziom.Length;
+            }
+        }
+        public int Szeroksc
+        {
+            get
+            {
+                return poziom[0].Length;
+            }
+        }
     }
 }

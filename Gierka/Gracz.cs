@@ -21,6 +21,7 @@ namespace Gierka
         private int maxJumpHeight;//maksymalna wysokosc skoku
         private Vector2 polozenie;
         private int fazaKroku;
+        private Vector2 starePolozenie;
 
         //------------------------------------------------------
 
@@ -44,11 +45,26 @@ namespace Gierka
             jump.Add(content.Load<Texture2D>("MrDefaulto_Fall"));
             jump.Add(content.Load<Texture2D>("MrDefaulto_Jump"));
             isJump = false;
-            polozenie = new Vector2(16, 210);
+            //polozenie = new Vector2(0, 210);
             maxJumpHeight = 32;
             jumpHeight = 0;
             isFall = false;
             fazaKroku = 0;
+        }
+
+        //------------------------------------------------------
+
+        public Vector2 Position//akcesor do ustawienia pozycji gracza na mapie
+        {
+            set
+            {
+                starePolozenie = polozenie;
+                polozenie = value;
+            }
+            get
+            {
+                return polozenie;
+            }
         }
 
         //-------------------------------------------------------
